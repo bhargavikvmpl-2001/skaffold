@@ -46,7 +46,7 @@ func marshalForPatching(in interface{}) ([]byte, error) {
 // empty, non-nil maps and slices that were omitted. It reports whether it added
 // anything to node.
 func restoreEmptyCollections(v reflect.Value, node *yamlv3.Node) bool {
-	for v.Kind() == reflect.Ptr || v.Kind() == reflect.Interface {
+	for v.Kind() == reflect.Pointer || v.Kind() == reflect.Interface {
 		if v.IsNil() {
 			return false
 		}
@@ -112,7 +112,7 @@ func restoreStructFields(v reflect.Value, node *yamlv3.Node) bool {
 
 		// The field was omitted. Put it back if it is an empty but non-nil
 		// collection, or a struct that contains one.
-		for fv.Kind() == reflect.Ptr && !fv.IsNil() {
+		for fv.Kind() == reflect.Pointer && !fv.IsNil() {
 			fv = fv.Elem()
 		}
 		var valueNode *yamlv3.Node
